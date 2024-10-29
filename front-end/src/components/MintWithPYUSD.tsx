@@ -1,12 +1,13 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import { useAccount, useWalletClient } from "wagmi";
-import { useMintNFT } from "../hooks/useMintNFT";
 import {
   usePYUSDTokenAddress,
   usePYNFTCollectionAddress,
 } from "../hooks/tokenAddress";
 import { ethers } from "ethers";
+import PYUSD from "../abi/PYUSD.json";
+import PYNFT from "../abi/PYNFT.json";
 
 const PINATA_API_KEY = import.meta.env.VITE_PINATA_API_KEY!;
 const PINATA_SECRET_API_KEY = import.meta.env.VITE_PINATA_SECRET_API_KEY!;
@@ -19,56 +20,55 @@ export default function MintWithPYUSD() {
   const [nftDescription, setNftDescription] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [approved, setApproved] = useState<boolean>(false);
-  const [mintPrice, setMintPrice] = useState<string>("");
+  const [mintPrice, setMintPrice] = useState<bigint | null>(null);
+  const [status, setStatus] = useState<string>("");
 
   const { isConnected } = useAccount();
   const { data: walletClient } = useWalletClient();
   const nftCollectionAddress = usePYNFTCollectionAddress();
   const pyusdTokenAddress = usePYUSDTokenAddress();
 
-  const { mintNFT, status: mintingStatus } = useMintNFT(nftCollectionAddress);
-
-  // Convert mint price to the appropriate format without parseUnits
-  const convertMintPriceToWei = (price: string) => {
-    const decimals = 6; // Assuming 6 decimals for PYUSD
-    return BigInt(price) * BigInt(10 ** decimals);
-  };
-
+  // Fetch mint price from the contract and check approval status
   useEffect(() => {
-    const checkApproval = async () => {
-      if (!walletClient || !mintPrice) return;
+    const fetchMintPriceAndApproval = async () => {
+      if (!walletClient) return;
 
       try {
         const provider = new ethers.BrowserProvider(walletClient);
         const signer = await provider.getSigner();
+
+        const nftContract = new ethers.Contract(
+          nftCollectionAddress,
+          PYNFT.abi,
+          signer
+        );
         const pyusdToken = new ethers.Contract(
           pyusdTokenAddress,
-          [
-            "function allowance(address owner, address spender) view returns (uint256)",
-          ],
+          PYUSD.abi,
           signer
         );
 
+        // Fetch mint price from the contract
+        const mintPriceFromContract = await nftContract.mintPrice();
+        setMintPrice(BigInt(mintPriceFromContract.toString()));
+
+        // Check if the user has approved the mint price
         const allowance = await pyusdToken.allowance(
           await signer.getAddress(),
           nftCollectionAddress
         );
-        setApproved(allowance >= convertMintPriceToWei(mintPrice));
+        console.log("Allowance:", allowance.toString());
+        console.log("Mint Price:", mintPriceFromContract.toString());
+        setApproved(BigInt(allowance.toString()) >= mintPriceFromContract);
       } catch (error) {
-        console.error("Error checking approval:", error);
+        console.error("Error fetching mint price or checking approval:", error);
       }
     };
 
     if (isConnected && walletClient) {
-      checkApproval();
+      fetchMintPriceAndApproval();
     }
-  }, [
-    isConnected,
-    walletClient,
-    nftCollectionAddress,
-    pyusdTokenAddress,
-    mintPrice,
-  ]);
+  }, [isConnected, walletClient, nftCollectionAddress, pyusdTokenAddress]);
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -86,6 +86,7 @@ export default function MintWithPYUSD() {
   const generateImage = async () => {
     try {
       setLoading(true);
+      setStatus("Generating AI image...");
 
       const response = await axios.post(
         "https://api.openai.com/v1/images/generations",
@@ -105,14 +106,18 @@ export default function MintWithPYUSD() {
 
       setImageUrl(response.data.data[0].url);
       setLoading(false);
+      setStatus("AI image generated successfully.");
     } catch (error) {
       console.error("Error generating image:", error);
+      setStatus("Error generating image.");
       setLoading(false);
     }
   };
 
   const uploadImageToIPFS = async () => {
+    setStatus("Uploading image to IPFS...");
     if (!imageFile) throw new Error("No image file selected");
+
     const formData = new FormData();
     formData.append("file", imageFile);
 
@@ -130,16 +135,19 @@ export default function MintWithPYUSD() {
         }
       );
       const ipfsHash = res.data.IpfsHash;
+      setStatus("Image uploaded to IPFS successfully.");
+      console.log("Image uploaded to IPFS:", ipfsHash);
       return `https://pink-absolute-catshark-415.mypinata.cloud/ipfs/${ipfsHash}`;
     } catch (error) {
       console.error("Error uploading image to IPFS:", error);
+      setStatus("Error uploading image to IPFS.");
       throw error;
     }
   };
 
   const handleApprovePYUSD = async () => {
-    if (!walletClient) {
-      console.error("Wallet not connected");
+    if (!walletClient || !mintPrice) {
+      setStatus("Wallet not connected or mint price unavailable.");
       return;
     }
 
@@ -148,34 +156,65 @@ export default function MintWithPYUSD() {
       const signer = await provider.getSigner();
       const pyusdToken = new ethers.Contract(
         pyusdTokenAddress,
-        [
-          "function approve(address spender, uint256 amount) public returns (bool)",
-        ],
+        PYUSD.abi,
         signer
       );
 
-      const mintPriceInWei = convertMintPriceToWei(mintPrice); // Convert mintPrice manually
-      const tx = await pyusdToken.approve(nftCollectionAddress, mintPriceInWei);
+      setStatus("Approving PYUSD for NFT minting...");
+      const tx = await pyusdToken.approve(nftCollectionAddress, mintPrice);
       await tx.wait();
+
+      // Check if the approval was successful
+      const allowance = await pyusdToken.allowance(
+        await signer.getAddress(),
+        nftCollectionAddress
+      );
+      console.log("Allowance after approval:", allowance.toString());
       setApproved(true);
-      console.log("PYUSD approved for NFT minting");
+      setStatus("PYUSD approved successfully for minting.");
     } catch (error) {
       console.error("Error approving PYUSD:", error);
+      setStatus("Approval failed.");
     }
   };
 
   const handleMintNFTWithPYUSD = async () => {
+    setStatus("Preparing to mint NFT...");
     let imageToUpload = imageUrl;
     if (imageFile) {
       try {
         imageToUpload = await uploadImageToIPFS();
       } catch (error) {
-        console.error("Error during IPFS upload:", error);
         return;
       }
     }
+    await mintNFT(imageToUpload);
+  };
 
-    await mintNFT(imageToUpload, nftName, nftDescription, prompt);
+  const mintNFT = async (tokenURI: string) => {
+    if (!walletClient) {
+      setStatus("Wallet not connected.");
+      return;
+    }
+
+    try {
+      setStatus("Minting NFT...");
+      const provider = new ethers.BrowserProvider(walletClient);
+      const signer = await provider.getSigner();
+      const nftContract = new ethers.Contract(
+        nftCollectionAddress,
+        PYNFT.abi,
+        signer
+      );
+
+      const transaction = await nftContract.mint(tokenURI);
+      setStatus(`Minting in progress... Transaction Hash: ${transaction.hash}`);
+      await transaction.wait();
+      setStatus("NFT minted successfully!");
+    } catch (error) {
+      console.error("Error minting NFT:", error);
+      setStatus("Minting failed.");
+    }
   };
 
   return (
@@ -214,19 +253,6 @@ export default function MintWithPYUSD() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Enter a prompt for AI image"
-              className="w-full p-3 border border-gray-600 rounded-lg bg-[#2D3748] text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-gray-300 mb-2">
-              Mint Price (PYUSD)
-            </label>
-            <input
-              type="number"
-              value={mintPrice}
-              onChange={(e) => setMintPrice(e.target.value)}
-              placeholder="Enter Mint Price"
               className="w-full p-3 border border-gray-600 rounded-lg bg-[#2D3748] text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -282,7 +308,7 @@ export default function MintWithPYUSD() {
             )}
           </div>
 
-          <p className="mt-4 text-center text-gray-400">{mintingStatus}</p>
+          <p className="mt-4 text-center text-gray-400">{status}</p>
         </div>
       )}
     </div>
