@@ -47,6 +47,17 @@ export default function Navbar() {
         >
           Odos Insights
         </NavLink>
+
+        <NavLink
+          to="/noves-check"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white border-b-2 border-purple-500 pb-1"
+              : "hover:text-purple-400 transition duration-200"
+          }
+        >
+          Noves Check
+        </NavLink>
       </div>
       <div className="flex items-center">
         <ConnectButton />

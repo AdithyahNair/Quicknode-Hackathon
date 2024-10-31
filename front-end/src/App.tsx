@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import MintFormPage from "./pages/MintFormPage";
 import MintWithPYUSDPage from "./pages/MintWithPYUSDPage";
 import OdosAPIPage from "./pages/OdosAPIPage";
+import TransactionAnalyzerPage from "./pages/TransactionAnalyzerPage";
 import { wagmiConfig } from "./config";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,10 @@ export default function App() {
                   element={<MintWithPYUSDPage />}
                 />
                 <Route path="/odos-api" element={<OdosAPIPage />} />
+                <Route
+                  path="/noves-check"
+                  element={<TransactionAnalyzerPage />}
+                />
               </Routes>
             </div>
           </Router>
