@@ -13,6 +13,7 @@ import OdosAPIPage from "./pages/OdosAPIPage";
 import TransactionAnalyzerPage from "./pages/TransactionAnalyzerPage";
 import BetterCausePage from "./pages/BetterCausePage";
 import MyAssetsPage from "./pages/MyAssetsPage";
+import FetchTransactionDetails from "./components/FetchTransactionDetails";
 import { wagmiConfig } from "./config";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,10 @@ export default function App() {
                 />
                 <Route path="/better-cause" element={<BetterCausePage />} />
                 <Route path="/my-assets" element={<MyAssetsPage />} />
+                <Route
+                  path="/transaction-details/:txHash"
+                  element={<FetchTransactionDetails />}
+                />
               </Routes>
             </div>
           </Router>

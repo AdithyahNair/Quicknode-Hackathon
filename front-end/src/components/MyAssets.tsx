@@ -37,13 +37,11 @@ export default function MyAssets() {
 
       const contracts = [
         new ethers.Contract(nftCollectionAddress, NFT_ABI.abi, signer),
-        new ethers.Contract(pynftCollectionAddress, PY_NFT_ABI.abi, signer),
       ];
 
       let userAssets: Asset[] = [];
 
       for (const contract of contracts) {
-        console.log;
         const totalIssued = await contract.totalIssued();
         console.log(totalIssued);
         for (let i = 0; i < totalIssued; i++) {
@@ -51,6 +49,7 @@ export default function MyAssets() {
           const tokenURI = await contract.tokenURI(i);
           console.log(tokenURI);
           const metadata = await fetch(tokenURI).then((res) => res.json());
+          console.log("meta: ", metadata);
           if (owner == address)
             userAssets.push({
               tokenId: i,
@@ -58,10 +57,11 @@ export default function MyAssets() {
               name: metadata.name,
               description: metadata.description,
             });
+          console.log(userAssets);
         }
       }
       console.log(userAssets);
-
+      console.log("userAssets: ", userAssets);
       setAssets(userAssets);
       setStatus("");
     } catch (error) {
@@ -77,12 +77,12 @@ export default function MyAssets() {
   }, [isConnected]);
 
   return (
-    <div className="bg-[#1A202C] p-10 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 text-white">
+    <div className="bg-[#1A202C] p-10 rounded-lg shadow-lg max-w-xxl mx-auto mt-10 text-white">
       <h1 className="text-3xl font-bold text-center mb-6">My Assets</h1>
 
       {status && <p className="text-center text-gray-400">{status}</p>}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {assets.map((asset) => (
           <div
             key={asset.tokenId}

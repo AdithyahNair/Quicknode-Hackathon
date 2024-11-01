@@ -16,7 +16,7 @@ export function pyusdTokenAddress(chain: Chain | undefined): Address {
     case sepolia:
     case localhost:
     case skaleNebulaTestnet:
-      return "0x943005462B9FE506EAb2e01d6023448c1C103814";
+      return "0x546ee037AB8647c985B8F217EE7dfce9bf334978";
     default:
       throw new Error(
         `Payment token address not configured for chain ${chain.name}`
@@ -33,7 +33,7 @@ export function pynftCollectionAddress(chain: Chain | undefined): Address {
     case sepolia:
     case localhost:
     case skaleNebulaTestnet:
-      return "0xfa87F29f47B8372B961994BFA44F18ba4E764645";
+      return "0x43A80ce3FDCd80F71032174e8AD6bB73392C8717";
     default:
       throw new Error(
         `NFT collection address not configured for chain ${chain.name}`

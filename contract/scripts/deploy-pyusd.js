@@ -16,6 +16,10 @@ async function main() {
   const HelloPYUSD = await ethers.getContractFactory("HelloPYUSD");
   const helloPYUSD = await HelloPYUSD.deploy(mockPYUSD.target, MINT_PRICE);
   console.log("HelloPYUSD deployed to:", helloPYUSD.target);
+
+  // Mint 1000000 PYUSD to the deployer
+  await mockPYUSD.mint(deployer.address, 1000000 * 10 ** 6);
+  console.log("Minted 1000000 PYUSD to the deployer");
 }
 
 main()
@@ -25,7 +29,7 @@ main()
     process.exit(1);
   });
 
-// ❯ npx hardhat run ./scripts/deploy-pyusd.js --network skale
 // Deploying contracts with the account: 0xAddc0142a647aE0C1081d202d35D943C4A5c06d2
-// MockPYUSD deployed to: 0x943005462B9FE506EAb2e01d6023448c1C103814
-// HelloPYUSD deployed to: 0xfa87F29f47B8372B961994BFA44F18ba4E764645
+// MockPYUSD deployed to: 0x546ee037AB8647c985B8F217EE7dfce9bf334978
+// HelloPYUSD deployed to: 0x43A80ce3FDCd80F71032174e8AD6bB73392C8717
+// Minted 1000000 PYUSD to the deployer

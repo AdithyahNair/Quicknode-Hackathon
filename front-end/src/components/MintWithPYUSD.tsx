@@ -22,7 +22,7 @@ export default function MintWithPYUSD() {
   const [approved, setApproved] = useState<boolean>(false);
   const [mintPrice, setMintPrice] = useState<bigint | null>(null);
   const [status, setStatus] = useState<string>("");
-
+  const [txHash, setTxHash] = useState<string>("");
   const { isConnected } = useAccount();
   const { data: walletClient } = useWalletClient();
   const nftCollectionAddress = usePYNFTCollectionAddress();
@@ -209,6 +209,7 @@ export default function MintWithPYUSD() {
 
       const transaction = await nftContract.mint(tokenURI);
       setStatus(`Minting in progress... Transaction Hash: ${transaction.hash}`);
+      setTxHash(transaction.hash);
       await transaction.wait();
       setStatus("NFT minted successfully!");
     } catch (error) {
@@ -217,6 +218,12 @@ export default function MintWithPYUSD() {
     }
   };
 
+  const openTransactionDetails = () => {
+    if (txHash) {
+      const transactionUrl = `/transaction-details/${txHash}`;
+      window.open(transactionUrl, "_blank");
+    }
+  };
   return (
     <div className="bg-[#1A202C] p-10 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 text-white">
       <h1 className="text-3xl font-bold text-center mb-6 text-gradient">
@@ -309,6 +316,14 @@ export default function MintWithPYUSD() {
           </div>
 
           <p className="mt-4 text-center text-gray-400">{status}</p>
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={openTransactionDetails}
+              className="px-4 py-2 text-blue-600 border border-blue-500 rounded-lg font-semibold transition duration-200 ease-in-out hover:bg-blue-500 hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 active:bg-blue-600"
+            >
+              View Transaction Details
+            </button>
+          </div>
         </div>
       )}
     </div>
