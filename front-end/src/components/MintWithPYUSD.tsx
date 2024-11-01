@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import { useAccount, useWalletClient } from "wagmi";
 import {

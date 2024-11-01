@@ -1,5 +1,4 @@
 // src/pages/MintWithPYUSDPage.tsx
-import React from "react";
 import MintWithPYUSD from "../components/MintWithPYUSD";
 
 export default function MintWithPYUSDPage() {

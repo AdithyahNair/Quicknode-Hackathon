@@ -1,5 +1,4 @@
 // src/pages/OdosAPIPage.tsx
-import React from "react";
 import MyAssets from "../components/MyAssets";
 
 export default function MyAssetsPage() {

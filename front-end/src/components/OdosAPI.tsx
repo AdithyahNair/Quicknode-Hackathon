@@ -1,6 +1,6 @@
 // src/components/OdosApiIntegration.tsx
 
-import React, { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { ethers } from "ethers";
 
 interface Chain {

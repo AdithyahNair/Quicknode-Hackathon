@@ -1,5 +1,4 @@
 // src/pages/OdosAPIPage.tsx
-import React from "react";
 import TransactionAnalyzer from "../components/TransactionAnalyzer";
 
 export default function OdosAPIPage() {

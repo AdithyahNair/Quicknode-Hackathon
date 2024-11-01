@@ -1,5 +1,4 @@
 // src/pages/MintFormPage.tsx
-import React from "react";
 import BetterCause from "../components/BetterCause";
 import CampaignList from "../components/CampaignList";
 export default function BetterCausePage() {

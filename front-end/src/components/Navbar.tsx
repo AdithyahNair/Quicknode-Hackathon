@@ -1,5 +1,4 @@
 // src/components/Navbar.tsx
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 

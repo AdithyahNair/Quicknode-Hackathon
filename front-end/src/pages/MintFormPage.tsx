@@ -1,5 +1,4 @@
 // src/pages/MintFormPage.tsx
-import React from "react";
 import MintForm from "../components/MintForm";
 
 export default function MintFormPage() {

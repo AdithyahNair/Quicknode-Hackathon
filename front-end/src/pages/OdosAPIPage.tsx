@@ -1,5 +1,4 @@
 // src/pages/OdosAPIPage.tsx
-import React from "react";
 import OdosAPI from "../components/OdosAPI";
 
 export default function OdosAPIPage() {
