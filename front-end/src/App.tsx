@@ -12,6 +12,8 @@ import MintFormPage from "./pages/MintFormPage";
 import MintWithPYUSDPage from "./pages/MintWithPYUSDPage";
 import OdosAPIPage from "./pages/OdosAPIPage";
 import TransactionAnalyzerPage from "./pages/TransactionAnalyzerPage";
+import BetterCausePage from "./pages/BetterCausePage";
+import MyAssetsPage from "./pages/MyAssetsPage";
 import { wagmiConfig } from "./config";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ export default function App() {
                   path="/noves-check"
                   element={<TransactionAnalyzerPage />}
                 />
+                <Route path="/better-cause" element={<BetterCausePage />} />
+                <Route path="/my-assets" element={<MyAssetsPage />} />
               </Routes>
             </div>
           </Router>

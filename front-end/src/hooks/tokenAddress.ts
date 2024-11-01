@@ -5,6 +5,7 @@ import {
   stakeAddress,
   pyusdTokenAddress,
   pynftCollectionAddress,
+  betterCauseAddress,
 } from "../config";
 
 export function useNFTCollectionAddress(): Address {
@@ -25,4 +26,9 @@ export function usePYUSDTokenAddress(): Address {
 export function usePYNFTCollectionAddress(): Address {
   const { chain } = useAccount();
   return pynftCollectionAddress(chain);
+}
+
+export function useBetterCauseAddress(): Address {
+  const { chain } = useAccount();
+  return betterCauseAddress(chain);
 }

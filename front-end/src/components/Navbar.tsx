@@ -58,6 +58,27 @@ export default function Navbar() {
         >
           Noves Check
         </NavLink>
+
+        <NavLink
+          to="/better-cause"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white border-b-2 border-purple-500 pb-1"
+              : "hover:text-purple-400 transition duration-200"
+          }
+        >
+          Better Cause
+        </NavLink>
+        <NavLink
+          to="/my-assets"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white border-b-2 border-purple-500 pb-1"
+              : "hover:text-purple-400 transition duration-200"
+          }
+        >
+          My Assets
+        </NavLink>
       </div>
       <div className="flex items-center">
         <ConnectButton />
