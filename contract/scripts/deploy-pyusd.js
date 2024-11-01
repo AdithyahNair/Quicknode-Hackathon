@@ -25,12 +25,7 @@ main()
     process.exit(1);
   });
 
+// ❯ npx hardhat run ./scripts/deploy-pyusd.js --network skale
 // Deploying contracts with the account: 0xAddc0142a647aE0C1081d202d35D943C4A5c06d2
-// MockPYUSD deployed to: 0xE3cfc35657847542FFa634eECDE25586ECF0FB74
-// HelloPYUSD deployed to: 0x9c252EB3103E7c0d560E83224E78FaAd5177b11c
-// Minted 1000000000 MockPYUSD to deployer account
-// Approved HelloPYUSD to spend 100000000 MockPYUSD
-// Minted NFT with HelloPYUSD
-// Deployer's MockPYUSD balance after minting: 900000000
-// HelloPYUSD contract's MockPYUSD balance after minting: 100000000
-// Deployer's NFT balance after minting: 1
+// MockPYUSD deployed to: 0x943005462B9FE506EAb2e01d6023448c1C103814
+// HelloPYUSD deployed to: 0xfa87F29f47B8372B961994BFA44F18ba4E764645
