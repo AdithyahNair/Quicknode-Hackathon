@@ -3,8 +3,9 @@ import { useLocation } from "react-router-dom";
 import { Message } from "../components/types";
 import Cerebras from "@cerebras/cerebras_cloud_sdk";
 import "../index.css";
-
+const CEREBRAS_API_KEY = import.meta.env.VITE_CEREBRAS;
 const ChatbotComponent = () => {
+  console.log("CEREBRAS_API_KEY", CEREBRAS_API_KEY);
   const [messages, setMessages] = useState<Message[]>([
     { text: "Hello! How can I assist you today?", isBot: true },
   ]);
@@ -14,7 +15,7 @@ const ChatbotComponent = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null); // Reference for scrolling
 
   const client = new Cerebras({
-    apiKey: "csk-pfdwvj9f6mmfe5n698txm9m5ryvpmxv3t3n66evyvrnpc2rm",
+    apiKey: CEREBRAS_API_KEY,
   });
 
   useEffect(() => {
