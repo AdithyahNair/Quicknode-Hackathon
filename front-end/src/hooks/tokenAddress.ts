@@ -6,7 +6,9 @@ import {
   pyusdTokenAddress,
   pynftCollectionAddress,
   betterCauseAddress,
+  getBaseURL,
 } from "../config";
+import { base } from "viem/chains";
 
 export function useNFTCollectionAddress(): Address {
   const { chain } = useAccount();
@@ -31,4 +33,9 @@ export function usePYNFTCollectionAddress(): Address {
 export function useBetterCauseAddress(): Address {
   const { chain } = useAccount();
   return betterCauseAddress(chain);
+}
+
+export function useBaseURL(): Promise<string> {
+  const { chain } = useAccount();
+  return getBaseURL(chain);
 }

@@ -102,6 +102,25 @@ export function stakeAddress(chain: Chain | undefined): Address {
   }
 }
 
+export function getBaseURL(chain: Chain | undefined): Promise<string> {
+  if (!chain) {
+    throw new Error("Chain is undefined. Please connect to a valid network.");
+  }
+
+  switch (chain) {
+    case sepolia:
+    case localhost:
+    case polygonAmoy:
+      return Promise.resolve("https://api.bettercause.io");
+    case skaleNebulaTestnet:
+      return Promise.resolve(
+        "https://internal.explorer.testnet.skalenodes.com:10001/api/v2/transactions/"
+      );
+    default:
+      throw new Error(`Stake address not configured for chain ${chain.name}`);
+  }
+}
+
 if (!import.meta.env.VITE_WALLETCONNECT_PROJECT_ID) {
   throw new Error("VITE_WALLETCONNECT_PROJECT_ID is not set");
 }

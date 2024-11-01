@@ -7,6 +7,7 @@ const QUICKNODE_API_KEY = import.meta.env.VITE_QUICKNODE_API_KEY!;
 export function useMintNFT(paymentToken: string) {
   const { data: walletClient } = useWalletClient();
   const [status, setStatus] = useState<string>("");
+  const [txHash, setTxHash] = useState<string>("0x123...");
 
   const mintNFT = async (
     imageUrl: string,
@@ -66,11 +67,12 @@ export function useMintNFT(paymentToken: string) {
       setStatus(`Minting in progress... Transaction Hash: ${transaction.hash}`);
       await transaction.wait();
       setStatus(`Minted successfully! Transaction Hash: ${transaction.hash}`);
+      setTxHash(transaction.hash);
     } catch (error) {
       console.error("Error minting NFT:", error);
       setStatus("Minting failed.");
     }
   };
 
-  return { mintNFT, status };
+  return { mintNFT, status, txHash };
 }

@@ -7,6 +7,7 @@ import {
   useNFTCollectionAddress,
   useStakeAddress,
 } from "../hooks/tokenAddress";
+import FetchTransactionDetails from "./FetchTransactionDetails";
 
 const PINATA_API_KEY = import.meta.env.VITE_PINATA_API_KEY!;
 const PINATA_SECRET_API_KEY = import.meta.env.VITE_PINATA_SECRET_API_KEY!;
@@ -19,13 +20,18 @@ export default function MintForm() {
   const [nftDescription, setNftDescription] = useState<string>("");
   const [tokenId, setTokenId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [showTxModal, setShowTxModal] = useState(false);
 
   const { isConnected } = useAccount();
   const nftCollectionAddress = useNFTCollectionAddress();
   const stakeAddress = useStakeAddress();
 
   const { stakeNFT, status: stakingStatus } = useStakeNFT(stakeAddress);
-  const { mintNFT, status: mintingStatus } = useMintNFT(nftCollectionAddress);
+  const {
+    mintNFT,
+    status: mintingStatus,
+    txHash: txHash,
+  } = useMintNFT(nftCollectionAddress);
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -216,6 +222,22 @@ export default function MintForm() {
           </div>
 
           <p className="mt-4 text-center text-gray-400">{combinedStatus}</p>
+          <div>
+            {/* Mint Form Code */}
+            <button
+              onClick={() => setShowTxModal(true)}
+              className="text-blue-500 underline"
+            >
+              View Transaction Details
+            </button>
+
+            {showTxModal && (
+              <FetchTransactionDetails
+                txHash={txHash}
+                onClose={() => setShowTxModal(false)}
+              />
+            )}
+          </div>
         </div>
       )}
     </div>
