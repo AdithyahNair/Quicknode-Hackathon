@@ -1,6 +1,5 @@
 import "@rainbow-me/rainbowkit/styles.css";
 
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
