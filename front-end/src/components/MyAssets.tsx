@@ -8,7 +8,7 @@ import {
 import NFT_ABI from "../abi/NFTCollection.json"; // Assuming both contracts share the same ABI
 import PY_NFT_ABI from "../abi/PYNFT.json";
 interface Asset {
-  tokenId: string;
+  tokenId: number;
   imageUrl: string;
   name: string;
   description: string;
@@ -43,21 +43,24 @@ export default function MyAssets() {
       let userAssets: Asset[] = [];
 
       for (const contract of contracts) {
-        const balance = await contract.balanceOf(address);
-        console.log("balance: ", balance);
-        for (let i = 0; i < balance; i++) {
-          const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-          const tokenURI = await contract.tokenURI(tokenId);
+        console.log;
+        const totalIssued = await contract.totalIssued();
+        console.log(totalIssued);
+        for (let i = 0; i < totalIssued; i++) {
+          const owner = await contract.ownerOf(i);
+          const tokenURI = await contract.tokenURI(i);
+          console.log(tokenURI);
           const metadata = await fetch(tokenURI).then((res) => res.json());
-
-          userAssets.push({
-            tokenId: tokenId.toString(),
-            imageUrl: metadata.image,
-            name: metadata.name,
-            description: metadata.description,
-          });
+          if (owner == address)
+            userAssets.push({
+              tokenId: i,
+              imageUrl: metadata.image,
+              name: metadata.name,
+              description: metadata.description,
+            });
         }
       }
+      console.log(userAssets);
 
       setAssets(userAssets);
       setStatus("");
@@ -74,7 +77,7 @@ export default function MyAssets() {
   }, [isConnected]);
 
   return (
-    <div className="bg-gray-900 p-10 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 text-white">
+    <div className="bg-[#1A202C] p-10 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 text-white">
       <h1 className="text-3xl font-bold text-center mb-6">My Assets</h1>
 
       {status && <p className="text-center text-gray-400">{status}</p>}

@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract NFTCollection is ERC721, ERC721URIStorage, Ownable {
-    uint256 private _nextTokenId;
+    uint256 public totalIssued;
 
     constructor(address initialOwner)
         ERC721("AI NFT", "AINFT")
@@ -16,14 +16,16 @@ contract NFTCollection is ERC721, ERC721URIStorage, Ownable {
 
     // Function for the contract owner to mint NFTs (similar to safeMint)
     function ownerMint(address to, string memory uri) public onlyOwner {
-        uint256 tokenId = _nextTokenId++;
+        uint256 tokenId = totalIssued;
+        totalIssued++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
 
     // Function that allows anyone to mint an NFT
     function publicMint(string memory uri) public {
-        uint256 tokenId = _nextTokenId++;
+        uint256 tokenId = totalIssued;
+        totalIssued++;
         _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
     }

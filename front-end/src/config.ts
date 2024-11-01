@@ -34,7 +34,7 @@ export function pynftCollectionAddress(chain: Chain | undefined): Address {
     case sepolia:
     case localhost:
     case skaleNebulaTestnet:
-      return "0x9c252EB3103E7c0d560E83224E78FaAd5177b11c";
+      return "0xB74D3F25EE0B718bb80F657381b81c81E13Df4d0";
     default:
       throw new Error(
         `NFT collection address not configured for chain ${chain.name}`
@@ -53,7 +53,7 @@ export function nftCollectionAddress(chain: Chain | undefined): Address {
     case polygonAmoy:
       return "0xACEBf59C1bF0FdA1e5B936034aE6b57fB82ab770";
     case skaleNebulaTestnet:
-      return "0x197f1BBD362e13A4f64a35ca8e8a888113d7a80f";
+      return "0x7C476D3335E187606c4323e2c55C188Bf9B37D25";
     default:
       throw new Error(
         `NFT collection address not configured for chain ${chain.name}`

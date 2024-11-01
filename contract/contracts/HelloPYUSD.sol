@@ -23,7 +23,8 @@ contract HelloPYUSD is ERC721URIStorage, Ownable {
             "Transfer of PYUSD failed"
         );
 
-        uint256 newTokenId = ++totalIssued;
+        uint256 newTokenId = totalIssued;
+        totalIssued++;
         _safeMint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, newTokenURI);
     }

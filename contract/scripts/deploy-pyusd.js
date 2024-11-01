@@ -16,39 +16,6 @@ async function main() {
   const HelloPYUSD = await ethers.getContractFactory("HelloPYUSD");
   const helloPYUSD = await HelloPYUSD.deploy(mockPYUSD.target, MINT_PRICE);
   console.log("HelloPYUSD deployed to:", helloPYUSD.target);
-
-  // Mint MockPYUSD to deployer for testing (e.g., 1000 tokens)
-  const mintAmount = 1000 * 10 ** 6; // Equivalent to 1000.000000 PYUSD
-  await mockPYUSD.mint(deployer.address, mintAmount);
-  console.log(`Minted ${mintAmount.toString()} MockPYUSD to deployer account`);
-
-  // Approve HelloPYUSD to spend deployer's MockPYUSD tokens
-  const approveTx = await mockPYUSD.approve(helloPYUSD.target, MINT_PRICE);
-  await approveTx.wait();
-  console.log(
-    `Approved HelloPYUSD to spend ${MINT_PRICE.toString()} MockPYUSD`
-  );
-
-  // Mint NFT by calling HelloPYUSD's mint function
-  const mintTx = await helloPYUSD.mint("https://example.com/nft-metadata");
-  await mintTx.wait();
-  console.log("Minted NFT with HelloPYUSD");
-
-  // Verify balances after minting
-  const deployerMockPYUSDBalance = await mockPYUSD.balanceOf(deployer.address);
-  console.log(
-    "Deployer's MockPYUSD balance after minting:",
-    deployerMockPYUSDBalance.toString()
-  );
-
-  const contractMockPYUSDBalance = await mockPYUSD.balanceOf(helloPYUSD.target);
-  console.log(
-    "HelloPYUSD contract's MockPYUSD balance after minting:",
-    contractMockPYUSDBalance.toString()
-  );
-
-  const nftBalance = await helloPYUSD.balanceOf(deployer.address);
-  console.log("Deployer's NFT balance after minting:", nftBalance.toString());
 }
 
 main()
