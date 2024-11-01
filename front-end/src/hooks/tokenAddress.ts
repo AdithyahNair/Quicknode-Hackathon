@@ -8,7 +8,6 @@ import {
   betterCauseAddress,
   getBaseURL,
 } from "../config";
-import { base } from "viem/chains";
 
 export function useNFTCollectionAddress(): Address {
   const { chain } = useAccount();

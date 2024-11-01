@@ -7,7 +7,6 @@ import {
   useNFTCollectionAddress,
   useStakeAddress,
 } from "../hooks/tokenAddress";
-import FetchTransactionDetails from "./FetchTransactionDetails";
 
 const PINATA_API_KEY = import.meta.env.VITE_PINATA_API_KEY!;
 const PINATA_SECRET_API_KEY = import.meta.env.VITE_PINATA_SECRET_API_KEY!;

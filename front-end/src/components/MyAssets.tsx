@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAccount, useWalletClient } from "wagmi";
 import { ethers } from "ethers";
-import {
-  useNFTCollectionAddress,
-  usePYNFTCollectionAddress,
-} from "../hooks/tokenAddress";
+import { useNFTCollectionAddress } from "../hooks/tokenAddress";
 import NFT_ABI from "../abi/NFTCollection.json"; // Assuming both contracts share the same ABI
-import PY_NFT_ABI from "../abi/PYNFT.json";
 interface Asset {
   tokenId: number;
   imageUrl: string;
@@ -18,7 +14,6 @@ export default function MyAssets() {
   const { isConnected, address } = useAccount();
   const { data: walletClient } = useWalletClient();
   const nftCollectionAddress = useNFTCollectionAddress();
-  const pynftCollectionAddress = usePYNFTCollectionAddress();
 
   const [assets, setAssets] = useState<Asset[]>([]);
   const [status, setStatus] = useState<string>("");
