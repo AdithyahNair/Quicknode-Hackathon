@@ -59,6 +59,23 @@ const ChatbotComponent = () => {
     }
   };
 
+  const renderMessage = (msg: Message) => {
+    // Replace **text** with <strong>text</strong> for bold styling
+    const formattedText = msg.text.replace(
+      /\*\*(.*?)\*\*/g,
+      "<strong>$1</strong>"
+    );
+
+    return (
+      <div
+        className={`chatbot-message ${
+          msg.isBot ? "chatbot-bot-message" : "chatbot-user-message"
+        }`}
+        dangerouslySetInnerHTML={{ __html: formattedText }} // Use dangerouslySetInnerHTML to render HTML
+      />
+    );
+  };
+
   return (
     <div className={`chatbot-container ${isOpen ? "open" : "closed"}`}>
       <div className="chatbot-header">
@@ -75,14 +92,7 @@ const ChatbotComponent = () => {
         <div className="chatbot-content">
           <div className="chatbot-messages">
             {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`chatbot-message ${
-                  msg.isBot ? "chatbot-bot-message" : "chatbot-user-message"
-                }`}
-              >
-                {msg.text}
-              </div>
+              <div key={index}>{renderMessage(msg)}</div>
             ))}
             {/* Empty div for scrolling target */}
             <div ref={messagesEndRef} />
