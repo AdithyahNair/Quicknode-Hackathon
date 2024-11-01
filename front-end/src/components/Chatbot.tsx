@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Message } from "../components/types";
 import Cerebras from "@cerebras/cerebras_cloud_sdk";
@@ -11,6 +11,7 @@ const ChatbotComponent = () => {
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(false); // Track if chatbot is open
   const location = useLocation(); // Get current route
+  const messagesEndRef = useRef<HTMLDivElement | null>(null); // Reference for scrolling
 
   const client = new Cerebras({
     apiKey: "csk-pfdwvj9f6mmfe5n698txm9m5ryvpmxv3t3n66evyvrnpc2rm",
@@ -20,6 +21,13 @@ const ChatbotComponent = () => {
     // Close chatbot whenever route changes
     setIsOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    // Scroll to the bottom of the messages when new messages are added
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]); // Dependency array includes messages
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,6 +84,8 @@ const ChatbotComponent = () => {
                 {msg.text}
               </div>
             ))}
+            {/* Empty div for scrolling target */}
+            <div ref={messagesEndRef} />
           </div>
           <form
             className="chatbot-input-container"

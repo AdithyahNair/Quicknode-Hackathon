@@ -149,7 +149,6 @@ button:focus-visible {
 /* index.css */
 
 /* ChatbotComponent.css */
-
 .chatbot-container {
   position: fixed;
   bottom: 20px;
@@ -207,15 +206,17 @@ button:focus-visible {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Space between messages */
+  gap: 8px;
 }
 
 .chatbot-message {
   max-width: 75%;
-  padding: 10px 15px;
+  padding: 12px 15px; /* Increased padding */
   border-radius: 20px;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 15px; /* Increased font size slightly for readability */
+  line-height: 1.5; /* Increased line-height for readability */
+  white-space: pre-wrap; /* Preserve line breaks */
+  word-wrap: break-word; /* Wrap long words */
   position: relative;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -282,21 +283,6 @@ button:focus-visible {
 .chatbot-send-button:hover {
   background-color: #357abd;
   transform: scale(1.05);
-}
-
-.chatbot-toggle-button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  position: absolute;
-  right: 15px;
-  transition: transform 0.2s;
-}
-
-.chatbot-toggle-button:hover {
-  transform: scale(1.1);
 }
 
 @tailwind base;
