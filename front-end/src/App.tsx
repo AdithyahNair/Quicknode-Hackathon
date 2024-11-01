@@ -1,5 +1,4 @@
 import "@rainbow-me/rainbowkit/styles.css";
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
@@ -14,6 +13,7 @@ import TransactionAnalyzerPage from "./pages/TransactionAnalyzerPage";
 import BetterCausePage from "./pages/BetterCausePage";
 import MyAssetsPage from "./pages/MyAssetsPage";
 import { wagmiConfig } from "./config";
+import ChatbotComponent from "./components/Chatbot";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +40,18 @@ export default function App() {
                 <Route path="/better-cause" element={<BetterCausePage />} />
                 <Route path="/my-assets" element={<MyAssetsPage />} />
               </Routes>
+            </div>
+
+            {/* Add the Chatbot component as a floating element */}
+            <div
+              style={{
+                position: "fixed",
+                bottom: "20px",
+                right: "20px",
+                zIndex: 1000,
+              }}
+            >
+              <ChatbotComponent />
             </div>
           </Router>
         </RainbowKitProvider>

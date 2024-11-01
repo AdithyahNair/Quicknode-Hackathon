@@ -1,77 +1,101 @@
-// import React, { useState, useEffect } from "react";
-// import Cerebras from "@cerebras/cerebras_cloud_sdk";
-// import "./Chatbot.css"; // Import CSS for styling the chatbot
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Message } from "../components/types";
+import Cerebras from "@cerebras/cerebras_cloud_sdk";
+import "../index.css";
 
-// // Initialize the Cerebras client with your API key
-// const client = new Cerebras({
-//   apiKey: process.env.REACT_APP_CEREBRAS_API_KEY,
-// });
+const ChatbotComponent = () => {
+  const [messages, setMessages] = useState<Message[]>([
+    { text: "Hello! How can I assist you today?", isBot: true },
+  ]);
+  const [input, setInput] = useState("");
+  const [isOpen, setIsOpen] = useState(false); // Track if chatbot is open
+  const location = useLocation(); // Get current route
 
-// const Chatbot = () => {
-//   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
-//     [{ role: "system", content: "Hello! How can I assist you today?" }]
-//   );
-//   const [userInput, setUserInput] = useState("");
-//   const [loading, setLoading] = useState(false);
+  const client = new Cerebras({
+    apiKey: "csk-pfdwvj9f6mmfe5n698txm9m5ryvpmxv3t3n66evyvrnpc2rm",
+  });
 
-//   // Handle user input submission
-//   const handleSend = async () => {
-//     if (!userInput.trim()) return;
+  useEffect(() => {
+    // Close chatbot whenever route changes
+    setIsOpen(false);
+  }, [location]);
 
-//     const userMessage = { role: "user", content: userInput };
-//     setMessages((prev) => [...prev, userMessage]);
-//     setUserInput("");
-//     setLoading(true);
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
 
-//     try {
-//       // Call Cerebras API for chat completion
-//       const completionCreateResponse = await client.chat.completions.create({
-//         messages: [...messages, userMessage],
-//         model: "llama3.1-8b",
-//       });
+    const userMessage = { text: input, isBot: false };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setInput("");
 
-//       const botMessage = completionCreateResponse.choices[0].message;
-//       setMessages((prev) => [...prev, botMessage]);
-//     } catch (error) {
-//       console.error("Error fetching response from Cerebras API:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+    try {
+      const completionCreateResponse = await client.chat.completions.create({
+        messages: [{ role: "user", content: input }],
+        model: "llama3.1-8b",
+      });
 
-//   // Handle pressing Enter to send a message
-//   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-//     if (event.key === "Enter") handleSend();
-//   };
+      const botResponseText =
+        completionCreateResponse.choices[0]?.message?.content ||
+        "Sorry, I didn't understand that.";
 
-//   return (
-//     <div className="chatbot">
-//       <div className="chatbot-header">AI Chatbot</div>
-//       <div className="chatbot-messages">
-//         {messages.map((msg, idx) => (
-//           <div
-//             key={idx}
-//             className={`chatbot-message ${
-//               msg.role === "user" ? "user" : "bot"
-//             }`}
-//           >
-//             {msg.content}
-//           </div>
-//         ))}
-//         {loading && <div className="chatbot-message bot">Typing...</div>}
-//       </div>
-//       <div className="chatbot-input">
-//         <input
-//           type="text"
-//           value={userInput}
-//           onChange={(e) => setUserInput(e.target.value)}
-//           onKeyDown={handleKeyDown}
-//           placeholder="Type a message..."
-//         />
-//         <button onClick={handleSend}>Send</button>
-//       </div>
-//     </div>
-//   );
-// };
+      const botMessage: Message = { text: botResponseText, isBot: true };
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+    } catch (error) {
+      console.error("Error:", error);
+      const errorMessage: Message = {
+        text: "Sorry, I encountered an error. Please try again.",
+        isBot: true,
+      };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+    }
+  };
 
-// export default Chatbot;
+  return (
+    <div className={`chatbot-container ${isOpen ? "open" : "closed"}`}>
+      <div className="chatbot-header">
+        <span>Chatbot</span>
+        <button
+          className="chatbot-toggle-button"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? "−" : "+"}
+        </button>
+      </div>
+
+      {isOpen && (
+        <div className="chatbot-content">
+          <div className="chatbot-messages">
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`chatbot-message ${
+                  msg.isBot ? "chatbot-bot-message" : "chatbot-user-message"
+                }`}
+              >
+                {msg.text}
+              </div>
+            ))}
+          </div>
+          <form
+            className="chatbot-input-container"
+            onSubmit={handleSendMessage}
+          >
+            <input
+              className="chatbot-input"
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Write your message here"
+            />
+            <button className="chatbot-send-button" type="submit">
+              ➤
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ChatbotComponent;
