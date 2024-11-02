@@ -2065,8 +2065,8 @@
       ]
     },
     "/Users/gokuleshwarannarayanan/Documents/Repositories/Personal Repositories/Hackathon Template/contract/contracts/NFTMarketplace.sol": {
-      "lastModificationDate": 1730160616051,
-      "contentHash": "20cd7fb02f4ff2f368a3064194e8a9c5",
+      "lastModificationDate": 1730564179239,
+      "contentHash": "ebaf21bbc3e719ff651d0a54c7b77bd7",
       "sourceName": "contracts/NFTMarketplace.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -2093,7 +2093,8 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
       ],
       "versionPragmas": [
         "^0.8.0"

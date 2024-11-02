@@ -7,6 +7,7 @@ import {
   pynftCollectionAddress,
   betterCauseAddress,
   getBaseURL,
+  MarketPlaceAddress,
 } from "../config";
 
 export function useNFTCollectionAddress(): Address {
@@ -44,4 +45,10 @@ export function useBaseURL(): Promise<string> {
     return Promise.resolve("0x0000000000000000000000000000000000000000");
   const { chain } = useAccount();
   return getBaseURL(chain);
+}
+
+export function useMarketPlaceAddress(): Address {
+  if (!useAccount().chain) return "0x0000000000000000000000000000000000000000";
+  const { chain } = useAccount();
+  return MarketPlaceAddress(chain);
 }

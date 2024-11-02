@@ -78,12 +78,25 @@ export function betterCauseAddress(chain: Chain | undefined): Address {
       );
   }
 }
-// Skale: 0xC36De8D9CE34Cc32C7F411F7785e84eF94f881a1
-// Amoy: 0x823e797e0942801361bE2710e5D230Ed93AFB450
 
-// NFTCollection deployed to: 0xACEBf59C1bF0FdA1e5B936034aE6b57fB82ab770
-// RewardToken deployed to: 0x391371AC48F31fb5136ecC14B27d1aB547326d40
-// NFTStaking deployed to: 0xbd88E8CDAE3b6EcfD9513182288c5A95271d2386
+export function MarketPlaceAddress(chain: Chain | undefined): Address {
+  if (!chain) {
+    throw new Error("Chain is undefined. Please connect to a valid network.");
+  }
+
+  switch (chain) {
+    case sepolia:
+    case localhost:
+    case polygonAmoy:
+      return "0x823e797e0942801361bE2710e5D230Ed93AFB450";
+    case skaleNebulaTestnet:
+      return "0x8F0F658182D86cc3C7DcBe318F05B47EfaA0Eb9C";
+    default:
+      throw new Error(
+        `NFT collection address not configured for chain ${chain.name}`
+      );
+  }
+}
 
 export function stakeAddress(chain: Chain | undefined): Address {
   if (!chain) {

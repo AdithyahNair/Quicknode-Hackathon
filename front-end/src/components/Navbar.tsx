@@ -4,7 +4,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function Navbar() {
   return (
-    <nav className="fixed  top-0 left-0 right-0 flex justify-between items-center p-4 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-md text-white">
+    <nav className="fixed z-50 top-0 left-0 right-0 flex justify-between items-center p-4 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-md text-white">
       <div className="flex items-center space-x-6 text-lg font-medium">
         <NavLink
           to="/"

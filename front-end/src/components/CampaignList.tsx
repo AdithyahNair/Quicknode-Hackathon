@@ -180,31 +180,35 @@ const CampaignList: React.FC = () => {
   }, [walletClient, betterCauseContractAddress]);
 
   return (
-    <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-      <h2 className="text-3xl font-bold mb-4 text-center">Active Campaigns</h2>
+    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg shadow-2xl w-full max-w-5xl mx-auto mt-10">
+      <h2 className="text-3xl font-extrabold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-300">
+        Active Campaigns
+      </h2>
 
       {loading && (
         <p className="text-center text-gray-400">Loading campaigns...</p>
       )}
       {error && <p className="text-center text-red-500">{error}</p>}
-      <p className="text-center text-gray-400">{status}</p>
+      <p className="text-center text-gray-400 mb-6">{status}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {campaigns.map((campaign) => (
           <div
             key={campaign.id}
-            className="bg-gray-700 p-4 rounded-lg shadow-md"
+            className="bg-gray-700 p-6 rounded-lg shadow-lg transform transition-all hover:scale-105 hover:shadow-2xl"
           >
             {campaign.image && (
               <img
                 src={campaign.image}
                 alt={campaign.title}
-                className="w-full h-32 object-cover rounded-lg mb-4"
+                className="w-full h-40 object-cover rounded-lg mb-4"
               />
             )}
-            <h3 className="text-xl font-bold mb-2">{campaign.title}</h3>
+            <h3 className="text-2xl font-bold mb-2 text-purple-200">
+              {campaign.title}
+            </h3>
             <p className="text-gray-300 mb-4">{campaign.description}</p>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-400 mb-2">
               Amount Collected: {formatEther(campaign.amountCollectedETH)} ETH /{" "}
               {formatUnits(campaign.amountCollectedPYUSD, 18)} PYUSD
             </p>
@@ -215,7 +219,7 @@ const CampaignList: React.FC = () => {
                 onChange={(e) =>
                   setPaymentMethod(e.target.value as "ETH" | "PYUSD")
                 }
-                className="w-full p-2 mb-2 bg-gray-600 text-white rounded-md"
+                className="w-full p-3 mb-2 bg-gray-600 text-white rounded-md"
               >
                 <option value="ETH">Donate with ETH</option>
                 <option value="PYUSD">Donate with PYUSD</option>
@@ -231,11 +235,11 @@ const CampaignList: React.FC = () => {
                     [campaign.id]: e.target.value,
                   })
                 }
-                className="w-full p-2 bg-gray-600 text-white rounded-md mb-2"
+                className="w-full p-3 bg-gray-600 text-white rounded-md mb-4"
               />
               <button
                 onClick={() => donateToCampaign(campaign.id)}
-                className="w-full py-2 rounded-md text-white font-bold bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 transition-all"
+                className="w-full py-3 rounded-lg font-bold text-lg bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 transition-all duration-200"
               >
                 Donate Now
               </button>
