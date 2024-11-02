@@ -149,6 +149,7 @@ button:focus-visible {
 /* index.css */
 
 /* ChatbotComponent.css */
+
 .chatbot-container {
   position: fixed;
   bottom: 20px;
@@ -219,6 +220,7 @@ button:focus-visible {
   word-wrap: break-word; /* Wrap long words */
   position: relative;
   animation: fadeIn 0.3s ease-in-out;
+  margin: 0; /* Remove default margin */
 }
 
 @keyframes fadeIn {
@@ -235,15 +237,17 @@ button:focus-visible {
 .chatbot-user-message {
   background-color: #d1e7dd;
   color: #0f5132;
-  align-self: flex-end;
+  align-self: flex-end; /* Align user messages to the right */
   border-top-right-radius: 0;
+  margin-left: auto; /* Push the user message to the right */
 }
 
 .chatbot-bot-message {
   background-color: #e7eaf1;
   color: #3a3b3c;
-  align-self: flex-start;
+  align-self: flex-start; /* Align bot messages to the left */
   border-top-left-radius: 0;
+  margin-right: auto; /* Keep the bot message to the left */
 }
 
 .chatbot-input-container {
