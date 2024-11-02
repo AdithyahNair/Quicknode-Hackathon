@@ -30,7 +30,7 @@ export default function TransactionAnalyzer() {
         {
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": "QN_83f6fa0d2d624beaafd50b179f48f3a9", // Replace with your QuickNode API key
+            "x-api-key": QUICKNODE_API_KEY, // Replace with your QuickNode API key
           },
         }
       );
