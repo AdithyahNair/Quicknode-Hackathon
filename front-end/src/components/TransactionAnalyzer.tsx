@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
-const NOVES_API_KEY = "YOUR_NOVES_API_KEY"; // Replace with your actual API key
-
+const NOVES_API_KEY = "02dcVgsLbKeJqsCTSM"; // Replace with your actual API key
+const QUICKNODE_API_KEY = import.meta.env.VITE_QUICKNODE_API_KEY!;
 export default function TransactionAnalyzer() {
   const [txHash, setTxHash] = useState<string>("");
   const [accountAddress, setAccountAddress] = useState<string>("");
@@ -19,9 +19,22 @@ export default function TransactionAnalyzer() {
   // Fetch a classified description of the transaction
   const classifyTransaction = async () => {
     try {
-      const response = await axios.get(
-        `https://translate.noves.fi/evm/${chain}/describeTx/${txHash}`
+      const response = await axios.post(
+        "https://api.quicknode.com/functions/rest/v1/functions/743c7eed-6e60-4cda-9b05-00a564de5f65/call",
+        {
+          user_data: {
+            chain: chain,
+            txHash: txHash,
+          },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "QN_83f6fa0d2d624beaafd50b179f48f3a9", // Replace with your QuickNode API key
+          },
+        }
       );
+
       setTransactionDescription(response.data.description);
     } catch (error) {
       console.error("Error classifying transaction:", error);
