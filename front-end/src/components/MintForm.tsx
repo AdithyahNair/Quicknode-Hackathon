@@ -10,6 +10,7 @@ import {
 
 const PINATA_API_KEY = import.meta.env.VITE_PINATA_API_KEY!;
 const PINATA_SECRET_API_KEY = import.meta.env.VITE_PINATA_SECRET_API_KEY!;
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 
 export default function MintForm() {
   const [prompt, setPrompt] = useState<string>("");
@@ -55,11 +56,12 @@ export default function MintForm() {
           prompt: prompt,
           n: 1,
           size: "1024x1024",
+          style: "vivid",
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
           },
         }
       );
