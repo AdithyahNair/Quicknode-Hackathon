@@ -327,7 +327,7 @@ export default function Home() {
               alt="Solidity"
               className="w-20 h-20"
             />
-            <img src="../../public/vite.svg" alt="Vite" className="w-20 h-20" />
+            <img src="../assets/vite.svg" alt="Vite" className="w-20 h-20" />
             <img
               src="https://www.rainbowkit.com/rainbow.svg"
               alt="Rainbow Kit"
