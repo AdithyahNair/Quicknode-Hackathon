@@ -125,7 +125,7 @@ import { useLocation } from "react-router-dom";
 import { Message } from "../components/types";
 import Cerebras from "@cerebras/cerebras_cloud_sdk";
 import "../index.css";
-import ChatbotIcon from "../../public/chatbot.jpg"; // Make sure to replace with your actual icon path
+import ChatbotIcon from "../assets/chatbot.jpg"; // Make sure to replace with your actual icon path
 
 const CEREBRAS_API_KEY = import.meta.env.VITE_CEREBRAS;
 
