@@ -1,4 +1,3 @@
-// src/pages/MintFormPage.tsx
 import MintForm from "../components/MintForm";
 
 export default function MintFormPage() {
