@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-const NOVES_API_KEY = "02dcVgsLbKeJqsCTSM"; // Replace with your actual API key
-const QUICKNODE_API_KEY = import.meta.env.VITE_QUICKNODE_API_KEY!;
+const NOVES_API_KEY = import.meta.env.VITE_NOVES_API_KEY!; // Replace with your actual API key
+
 export default function TransactionAnalyzer() {
   const [txHash, setTxHash] = useState<string>("");
   const [accountAddress, setAccountAddress] = useState<string>("");
   const [chain, setChain] = useState<string>("eth");
+  const [chains, setChains] = useState<any[]>([]);
   const [transactionDetails, setTransactionDetails] = useState<any>(null);
   const [transactionDescription, setTransactionDescription] = useState<
     string | null
@@ -16,25 +17,22 @@ export default function TransactionAnalyzer() {
   // Set up axios default header for API key
   axios.defaults.headers.common["apiKey"] = NOVES_API_KEY;
 
-  // Fetch a classified description of the transaction
+  // Fetch available chains from Noves
+  const fetchChains = async () => {
+    try {
+      const response = await axios.get("https://translate.noves.fi/evm/chains");
+      setChains(response.data);
+    } catch (error) {
+      console.error("Error fetching chains:", error);
+    }
+  };
+
+  // Fetch transaction description directly from Noves
   const classifyTransaction = async () => {
     try {
-      const response = await axios.post(
-        "https://api.quicknode.com/functions/rest/v1/functions/743c7eed-6e60-4cda-9b05-00a564de5f65/call",
-        {
-          user_data: {
-            chain: chain,
-            txHash: txHash,
-          },
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": QUICKNODE_API_KEY, // Replace with your QuickNode API key
-          },
-        }
+      const response = await axios.get(
+        `https://translate.noves.fi/evm/${chain}/describeTx/${txHash}`
       );
-
       setTransactionDescription(response.data.description);
     } catch (error) {
       console.error("Error classifying transaction:", error);
@@ -65,23 +63,33 @@ export default function TransactionAnalyzer() {
     }
   };
 
+  useEffect(() => {
+    fetchChains();
+  }, []);
+
   return (
     <div className="bg-[#1A202C] p-10 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 text-white">
       <h2 className="text-3xl font-bold text-center mb-6">
         Transaction Analyzer
       </h2>
 
+      {/* Chain Selection Dropdown */}
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Chain</label>
-        <input
-          type="text"
+        <select
           value={chain}
           onChange={(e) => setChain(e.target.value)}
-          placeholder="e.g., eth, bsc"
           className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        >
+          {chains.map((chainOption) => (
+            <option key={chainOption.evmChainId} value={chainOption.name}>
+              {chainOption.name} ({chainOption.evmChainId})
+            </option>
+          ))}
+        </select>
       </div>
 
+      {/* Transaction Hash Input */}
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Transaction Hash</label>
         <input
@@ -93,6 +101,7 @@ export default function TransactionAnalyzer() {
         />
       </div>
 
+      {/* Account Address Input */}
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Account Address</label>
         <input
@@ -104,6 +113,7 @@ export default function TransactionAnalyzer() {
         />
       </div>
 
+      {/* Action Buttons */}
       <div className="mt-6 flex flex-col md:flex-row md:justify-between gap-4">
         <button
           onClick={classifyTransaction}

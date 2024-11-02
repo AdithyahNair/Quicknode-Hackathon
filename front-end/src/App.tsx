@@ -15,7 +15,6 @@ import MyAssetsPage from "./pages/MyAssetsPage";
 import FetchTransactionDetails from "./components/FetchTransactionDetails";
 import { wagmiConfig } from "./config";
 import ChatbotComponent from "./components/Chatbot";
-
 const queryClient = new QueryClient();
 
 export default function App() {

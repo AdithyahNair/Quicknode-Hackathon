@@ -20,7 +20,6 @@ export default function MintForm() {
   const [nftDescription, setNftDescription] = useState<string>("");
   const [tokenId, setTokenId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
   const { isConnected } = useAccount();
   const nftCollectionAddress = useNFTCollectionAddress();
   const stakeAddress = useStakeAddress();
