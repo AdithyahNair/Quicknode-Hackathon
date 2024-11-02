@@ -33,7 +33,7 @@ class ActionProvider {
         },
         {
           headers: {
-            Authorization: `Bearer csk-pfdwvj9f6mmfe5n698txm9m5ryvpmxv3t3n66evyvrnpc2rm`, // Correct environment variable for API key
+            Authorization: `Bearer ${import.meta.env.VITE_CEREBRAS_API_KEY}`, // Correct environment variable for API key
           },
         }
       );

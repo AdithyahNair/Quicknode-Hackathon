@@ -127,8 +127,6 @@ import Cerebras from "@cerebras/cerebras_cloud_sdk";
 import "../index.css";
 import ChatbotIcon from "../assets/chatbot.jpg"; // Make sure to replace with your actual icon path
 
-const CEREBRAS_API_KEY = import.meta.env.VITE_CEREBRAS;
-
 const ChatbotComponent = () => {
   const [messages, setMessages] = useState<Message[]>([
     { text: "Hello! How can I assist you today?", isBot: true },
@@ -139,7 +137,7 @@ const ChatbotComponent = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null); // Reference for scrolling
 
   const client = new Cerebras({
-    apiKey: CEREBRAS_API_KEY,
+    apiKey: import.meta.env.VITE_CEREBRAS_API_KEY,
   });
 
   useEffect(() => {
