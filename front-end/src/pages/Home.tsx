@@ -3,7 +3,7 @@ import { useAccount, useWalletClient } from "wagmi";
 import { ethers, formatEther, parseEther } from "ethers";
 import { useMarketPlaceAddress } from "../hooks/tokenAddress";
 import NFTMarketPlaceABI from "../abi/NFTMarketPlace.json";
-
+import CryptoDashboard from "../components/CryptoDashboard";
 interface Asset {
   tokenId: number;
   imageUrl: string;
@@ -169,6 +169,7 @@ export default function Home() {
         </div>
       </div>
 
+      <CryptoDashboard />
       <div className="bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen text-white p-10">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-semibold text-white mb-6">

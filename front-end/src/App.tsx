@@ -13,6 +13,7 @@ import TransactionAnalyzerPage from "./pages/TransactionAnalyzerPage";
 import BetterCausePage from "./pages/BetterCausePage";
 import MyAssetsPage from "./pages/MyAssetsPage";
 import FetchTransactionDetails from "./components/FetchTransactionDetails";
+import CryptoDashboard from "./components/CryptoDashboard";
 import { wagmiConfig } from "./config";
 import ChatbotComponent from "./components/Chatbot";
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ export default function App() {
                   path="/transaction-details/:txHash"
                   element={<FetchTransactionDetails />}
                 />
+                <Route path="/crypto-dashboard" element={<CryptoDashboard />} />
               </Routes>
             </div>
 
