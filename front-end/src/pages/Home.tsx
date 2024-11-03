@@ -147,6 +147,16 @@ export default function Home() {
               className="w-20 h-20"
             />
             <img
+              src="https://api.nuget.org/v3-flatcontainer/coinapi.rest.v1/3.2.4/icon"
+              alt="CoinAPI"
+              className="w-20 h-20"
+            />
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqzkeH0Bm4Ay-LVWxVlRSFglR2MroABkrYsg&s"
+              alt="CoinPaprika"
+              className="w-20 h-20"
+            />
+            <img
               src="https://banner2.cleanpng.com/20180715/xcj/kisspng-solidity-ethereum-smart-contract-blockchain-comput-programming-language-5b4b4aedae4b16.6414784515316610377139.jpg"
               alt="Solidity"
               className="w-20 h-20"
