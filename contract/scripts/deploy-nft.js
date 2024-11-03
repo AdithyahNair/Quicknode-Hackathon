@@ -6,9 +6,16 @@ async function main() {
   const rewardToken = await RewardToken.deploy(deployer.address);
   console.log("RewardToken deployed to:", rewardToken.target);
 
-  const NFTCollection = await ethers.getContractFactory("NFTCollection");
-  const nftCollection = await NFTCollection.deploy(deployer.address);
-  console.log("NFTCollection deployed to:", nftCollection.target);
+  // const NFTCollection = await ethers.getContractFactory("NFTCollection");
+  // const nftCollection = await NFTCollection.deploy(deployer.address);
+  // console.log("NFTCollection deployed to:", nftCollection.target);
+  const NFTStaking = await ethers.getContractFactory("NFTStaking");
+  const nftStaking = await NFTStaking.deploy(
+    "0x7C476D3335E187606c4323e2c55C188Bf9B37D25",
+    rewardToken.target,
+    deployer.address
+  );
+  console.log("NFTStaking deployed to:", nftStaking.target);
 }
 
 main()

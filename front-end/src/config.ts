@@ -109,7 +109,7 @@ export function stakeAddress(chain: Chain | undefined): Address {
     case polygonAmoy:
       return "0xbd88E8CDAE3b6EcfD9513182288c5A95271d2386";
     case skaleNebulaTestnet:
-      return "0xe25E49d9C5BbAf5DB4ee49EF2c7caC24d5bD0536";
+      return "0x62DC0326cf4DE0b6e8c8cEd6B0e083901da6dD80";
     default:
       throw new Error(`Stake address not configured for chain ${chain.name}`);
   }
@@ -145,13 +145,10 @@ if (!import.meta.env.VITE_SEPOLIA_RPC_URL) {
 export const wagmiConfig = getDefaultConfig({
   appName: "hackathon",
   projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID,
-  chains: [sepolia, localhost, skaleNebulaTestnet, polygonAmoy], // Ensure these are correctly imported and configured
+  chains: [skaleNebulaTestnet], // Ensure these are correctly imported and configured
   transports: {
-    [localhost.id]: http("http://localhost:8545"),
-    [sepolia.id]: http(import.meta.env.VITE_SEPOLIA_RPC_URL || ""),
     [skaleNebulaTestnet.id]: http(
       "https://testnet.skalenodes.com/v1/lanky-ill-funny-testnet"
     ),
-    [polygonAmoy.id]: http("https://polygon-amoy.drpc.org"),
   },
 });
