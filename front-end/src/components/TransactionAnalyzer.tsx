@@ -4,7 +4,9 @@ import axios from "axios";
 const NOVES_API_KEY = import.meta.env.VITE_NOVES_API_KEY!; // Replace with your actual API key
 
 export default function TransactionAnalyzer() {
-  const [txHash, setTxHash] = useState<string>("");
+  const [txHash, setTxHash] = useState<string>(
+    "0xff061b04fb14704d450a54be8c91f79ed06b7a0fb1264e521c3d749fcd0c2881"
+  );
   const [accountAddress, setAccountAddress] = useState<string>("");
   const [chain, setChain] = useState<string>("eth");
   const [chains, setChains] = useState<any[]>([]);

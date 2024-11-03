@@ -170,117 +170,241 @@ export default function OdosApiIntegration() {
     }
   }, [selectedChain, inputToken, outputToken, amount]);
 
+  // return (
+  //   <div className="bg-[#1A202C] p-10 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 text-white">
+  //     <h2 className="text-3xl font-bold mb-6 text-center">Odos Insights</h2>
+  //     <p className="text-center mb-6">
+  //       Use this tool to visualize token swaps across different liquidity pools.
+  //     </p>
+
+  //     <div className="mb-6">
+  //       {loading ? (
+  //         <p className="text-center text-gray-400">
+  //           Loading supported chains...
+  //         </p>
+  //       ) : (
+  //         <div className="mb-4">
+  //           <label htmlFor="chainId" className="block font-semibold mb-2">
+  //             Select Chain:
+  //           </label>
+  //           <select
+  //             id="chainId"
+  //             value={selectedChain}
+  //             onChange={(e) => setSelectedChain(Number(e.target.value))}
+  //             className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           >
+  //             <option value="" disabled>
+  //               Select a chain
+  //             </option>
+  //             {chains.map((chain) => (
+  //               <option key={chain.chainId} value={chain.chainId}>
+  //                 {chain.chainName} (Chain ID: {chain.chainId})
+  //               </option>
+  //             ))}
+  //           </select>
+  //         </div>
+  //       )}
+  //     </div>
+
+  //     <div className="mb-6">
+  //       <label className="block font-semibold mb-2">Input Token</label>
+  //       <input
+  //         type="text"
+  //         placeholder="Enter input token address"
+  //         value={inputToken}
+  //         onChange={handleInputTokenChange}
+  //         className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+  //       />
+  //       {inputError && <p className="text-red-500 text-sm">{inputError}</p>}
+  //       <p className="text-sm text-gray-400">
+  //         Price: ${tokenPrices[inputToken] || "N/A"}
+  //       </p>
+
+  //       <label className="block font-semibold mt-4 mb-2">Output Token</label>
+  //       <input
+  //         type="text"
+  //         placeholder="Enter output token address"
+  //         value={outputToken}
+  //         onChange={handleOutputTokenChange}
+  //         className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+  //       />
+  //       {outputError && <p className="text-red-500 text-sm">{outputError}</p>}
+  //       <p className="text-sm text-gray-400">
+  //         Price: ${tokenPrices[outputToken] || "N/A"}
+  //       </p>
+
+  //       <label className="block font-semibold mt-4 mb-2">Amount</label>
+  //       <input
+  //         type="number"
+  //         placeholder="Enter amount to swap"
+  //         value={amount}
+  //         onChange={(e) => setAmount(e.target.value)}
+  //         className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //       />
+  //       <button
+  //         onClick={getOdosQuote}
+  //         className="w-full mt-6 p-3 bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 text-white font-semibold transition-all"
+  //       >
+  //         Get Swap Path
+  //       </button>
+  //     </div>
+
+  //     <div className="mt-8">
+  //       {odosPathViz && (
+  //         <div className="mb-8">
+  //           <h3 className="text-2xl font-bold mb-4">Path Visualization</h3>
+  //           <img
+  //             src={odosPathViz}
+  //             alt="Odos Path Visualization"
+  //             className="bg-white w-full rounded-lg shadow-lg"
+  //           />
+  //         </div>
+  //       )}
+
+  //       {quoteData && (
+  //         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+  //           <h3 className="text-2xl font-bold mb-4">Quote Information</h3>
+  //           <p>
+  //             <strong>Gas Estimate:</strong> {quoteData.gasEstimate} wei
+  //           </p>
+  //           <p>
+  //             <strong>Price Impact:</strong> {quoteData.priceImpact}%
+  //           </p>
+  //           <p>
+  //             <strong>Input Tokens:</strong>{" "}
+  //             {quoteData.inTokens ? quoteData.inTokens.join(", ") : "N/A"}
+  //           </p>
+  //           <p>
+  //             <strong>Output Tokens:</strong>{" "}
+  //             {quoteData.outTokens ? quoteData.outTokens.join(", ") : "N/A"}
+  //           </p>
+  //         </div>
+  //       )}
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div className="bg-[#1A202C] p-10 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 text-white">
-      <h2 className="text-3xl font-bold mb-6 text-center">Odos Insights</h2>
-      <p className="text-center mb-6">
-        Use this tool to visualize token swaps across different liquidity pools.
+    <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 p-10 rounded-lg shadow-2xl max-w-2xl mx-auto mt-10 text-white transition-all duration-300">
+      <h2 className="text-4xl font-extrabold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+        Odos Insights
+      </h2>
+      <p className="text-center mb-8 text-gray-400">
+        Visualize token swaps across different liquidity pools.
       </p>
 
-      <div className="mb-6">
-        {loading ? (
-          <p className="text-center text-gray-400">
-            Loading supported chains...
-          </p>
-        ) : (
-          <div className="mb-4">
-            <label htmlFor="chainId" className="block font-semibold mb-2">
-              Select Chain:
-            </label>
-            <select
-              id="chainId"
-              value={selectedChain}
-              onChange={(e) => setSelectedChain(Number(e.target.value))}
-              className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="" disabled>
-                Select a chain
+      {loading ? (
+        <p className="text-center text-gray-400">Loading supported chains...</p>
+      ) : (
+        <div className="mb-6">
+          <label className="block text-lg font-semibold mb-2 text-gray-300">
+            Select Chain
+          </label>
+          <select
+            value={selectedChain}
+            onChange={(e) => setSelectedChain(Number(e.target.value))}
+            className="w-full p-4 rounded-lg border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled>
+              Select a chain
+            </option>
+            {chains.map((chain) => (
+              <option key={chain.chainId} value={chain.chainId}>
+                {chain.chainName} (Chain ID: {chain.chainId})
               </option>
-              {chains.map((chain) => (
-                <option key={chain.chainId} value={chain.chainId}>
-                  {chain.chainName} (Chain ID: {chain.chainId})
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="mb-6">
-        <label className="block font-semibold mb-2">Input Token</label>
+        <label className="block text-lg font-semibold mb-2 text-gray-300">
+          Input Token
+        </label>
         <input
           type="text"
           placeholder="Enter input token address"
           value={inputToken}
           onChange={handleInputTokenChange}
-          className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+          className="w-full p-4 rounded-lg border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
         />
         {inputError && <p className="text-red-500 text-sm">{inputError}</p>}
         <p className="text-sm text-gray-400">
           Price: ${tokenPrices[inputToken] || "N/A"}
         </p>
+      </div>
 
-        <label className="block font-semibold mt-4 mb-2">Output Token</label>
+      <div className="mb-6">
+        <label className="block text-lg font-semibold mb-2 text-gray-300">
+          Output Token
+        </label>
         <input
           type="text"
           placeholder="Enter output token address"
           value={outputToken}
           onChange={handleOutputTokenChange}
-          className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+          className="w-full p-4 rounded-lg border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
         />
         {outputError && <p className="text-red-500 text-sm">{outputError}</p>}
         <p className="text-sm text-gray-400">
           Price: ${tokenPrices[outputToken] || "N/A"}
         </p>
+      </div>
 
-        <label className="block font-semibold mt-4 mb-2">Amount</label>
+      <div className="mb-6">
+        <label className="block text-lg font-semibold mb-2 text-gray-300">
+          Amount
+        </label>
         <input
           type="number"
           placeholder="Enter amount to swap"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-4 rounded-lg border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button
-          onClick={getOdosQuote}
-          className="w-full mt-6 p-3 bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 text-white font-semibold transition-all"
-        >
-          Get Swap Path
-        </button>
       </div>
 
-      <div className="mt-8">
-        {odosPathViz && (
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold mb-4">Path Visualization</h3>
-            <img
-              src={odosPathViz}
-              alt="Odos Path Visualization"
-              className="bg-white w-full rounded-lg shadow-lg"
-            />
-          </div>
-        )}
+      <button
+        onClick={getOdosQuote}
+        className="w-full p-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Get Swap Path
+      </button>
 
-        {quoteData && (
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-bold mb-4">Quote Information</h3>
-            <p>
-              <strong>Gas Estimate:</strong> {quoteData.gasEstimate} wei
-            </p>
-            <p>
-              <strong>Price Impact:</strong> {quoteData.priceImpact}%
-            </p>
-            <p>
-              <strong>Input Tokens:</strong>{" "}
-              {quoteData.inTokens ? quoteData.inTokens.join(", ") : "N/A"}
-            </p>
-            <p>
-              <strong>Output Tokens:</strong>{" "}
-              {quoteData.outTokens ? quoteData.outTokens.join(", ") : "N/A"}
-            </p>
-          </div>
-        )}
-      </div>
+      {odosPathViz && (
+        <div className="mt-10">
+          <h3 className="text-3xl font-bold mb-6 text-center">
+            Path Visualization
+          </h3>
+          <img
+            src={odosPathViz}
+            alt="Odos Path Visualization"
+            className="w-full rounded-lg shadow-lg border border-gray-700"
+          />
+        </div>
+      )}
+
+      {quoteData && (
+        <div className="bg-gray-800 p-6 mt-8 rounded-lg shadow-lg">
+          <h3 className="text-2xl font-bold mb-4 text-gradient">
+            Quote Information
+          </h3>
+          <p>
+            <strong>Gas Estimate:</strong> {quoteData.gasEstimate} wei
+          </p>
+          <p>
+            <strong>Price Impact:</strong> {quoteData.priceImpact}%
+          </p>
+          <p>
+            <strong>Input Tokens:</strong>{" "}
+            {quoteData.inTokens ? quoteData.inTokens.join(", ") : "N/A"}
+          </p>
+          <p>
+            <strong>Output Tokens:</strong>{" "}
+            {quoteData.outTokens ? quoteData.outTokens.join(", ") : "N/A"}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
