@@ -106,7 +106,7 @@ export default function Home() {
       <div className="bg-gradient-to-b from-gray-900 to-gray-800 mt-10 text-white p-10">
         <div className="text-center mb-12 mt-20">
           <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 mb-4 drop-shadow-lg">
-            NFT Marketplace
+            NFTVerse
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Discover and purchase exclusive NFTs. Connect your wallet to explore
