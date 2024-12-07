@@ -118,6 +118,8 @@ If you have any questions or suggestions, feel free to reach out!
 
 - **LinkedIn**: [Gokuleshwaran Narayanan](https://www.linkedin.com/in/gokulnpc)
 - **Email**: gokulnpc@gmail.com
+- **LinkedIn**: [Adithyah Nair](https://www.linkedin.com/in/adithyahnair)
+- **Email**: adithyah.nair@gmail.com
 
 ---
 
